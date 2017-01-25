@@ -1,0 +1,15 @@
+Check if the VMs in a Azure subscription are connected to OMS. If the VMs are not connected to OMS, they will get connected:
+
+Login-AzureRmAccount
+Select-AzureRmSubscription <SubscriptionName>
+
+$OMSWorkspace = Get-AzureRmOperationalInsightsWorkspace    
+$keys = Get-AzureRmOperationalInsightsWorkspaceSharedKeys -ResourceGroupName $OMSWorkspace.ResourceGroupName -Name $OMSWorkspace.Name    
+$workspaceId = $OMSWorkspace.CustomerId    
+$workspaceKey = $keys.PrimarySharedKey    
+$VMs = Get-AzureVM    
+$VMs | ForEach-Object{    
+if($_.ResourceExtensionStatusList.HandlerName -notcontains 'Microsoft.EnterpriseCloud.Monitoring.MicrosoftMonitoringAgent')     
+{     
+Set-AzureVMExtension -VM $_ -Publisher 'Microsoft.EnterpriseCloud.Monitoring' -ExtensionName 'MicrosoftMonitoringAgent' -Version '1.*' -PublicConfiguration "{'workspaceId': $workspaceId}" -PrivateConfiguration "{'workspaceKey': $workspaceKey}" | Update-AzureVM   
+}
