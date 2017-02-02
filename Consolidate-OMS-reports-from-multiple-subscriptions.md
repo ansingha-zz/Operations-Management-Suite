@@ -38,6 +38,7 @@ $results.Value | ConvertFrom-Json | Select-Object *,@{Name='Subscription';Expres
 }
 ``` 
 
+
 Or if we dont have a saved search, we can directly get the results in Excel from a dynamic query as follows: 
 ```
 $dynamicQuery = "" #write the dynamic query
