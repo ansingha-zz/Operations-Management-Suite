@@ -1,4 +1,4 @@
- ### Steps to be followed to create a new OMS workspace, install required solutions and install 'Microsoft Monitoring Agent' virtual machine extension to all VMs in the Azure Subscription:
+### Steps to be followed to create a new OMS workspace, install required solutions and install Microsoft Monitoring Agent virtual machine extension to all VMs in the Azure Subscription:
 
 ```
 #please provide the subscription name
@@ -38,9 +38,7 @@ Get-AzureRmOperationalInsightsIntelligencePacks -ResourceGroupName $ResourceGrou
 Set-AzureRmOperationalInsightsIntelligencePack -ResourceGroupName $ResourceGroupName -WorkspaceName $WorkspaceName -IntelligencePackName ADAssessment -Enabled $true
 
 $workspace1 = Get-AzureRmOperationalInsightsWorkspace -ResourceGroupName $ResourceGroupName -Name $WorkspaceName
-
 $keys = Get-AzureRmOperationalInsightsWorkspaceSharedKeys -ResourceGroupName $ResourceGroupName -Name $WorkspaceName
-
 　
 #steps to connect Classic VMs  to  this Workspace
 Add-AzureAccount
@@ -51,11 +49,9 @@ $Allvm = Get-AzureVM
 
 $workspaceId = $workspace1.CustomerId
 $workspaceKey = $keys.PrimarySharedKey
-
 　
 ForEach($vm in $Allvm)
 {
-
 Set-AzureVMExtension -VM $vm -Publisher 'Microsoft.EnterpriseCloud.Monitoring' -ExtensionName 'MicrosoftMonitoringAgent' -Version '1.*' -PublicConfiguration "{'workspaceId': '$workspaceId'}" -PrivateConfiguration "{'workspaceKey': '$workspaceKey' }" | Update-AzureVM -Verbose
 }
 ``` 
