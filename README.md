@@ -1,3 +1,3 @@
 ### Operations-Management-Suite
 
-Shareing my experience of working on OMS
+Sample scripts from my experience working on Operations Management Suite (OMS)
