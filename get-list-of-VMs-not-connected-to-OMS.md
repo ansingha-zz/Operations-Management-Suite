@@ -1,4 +1,4 @@
-#### Getting status of Classic VMs from multiple subscriptions - are VMs Running, Stopped, Connected to OMS?
+### Getting status of Classic VMs from multiple subscriptions - are VMs Running, Stopped, Connected to OMS?
 If you are managing multiple Azure subscription and need to keep track of VM's status, the following PowerShell script can do it:
 
 ``` 
