@@ -1,4 +1,4 @@
-### Getting status of Classic VMs from multiple subscriptions - are VMs Running, Stopped, Connected to OMS?
+### Getting status of Classic VMs from multiple subscriptions - are VMs Running, Stopped, Connected to Operations Management Suite?
 If you are managing multiple Azure subscription and need to keep track of VM's status, the following PowerShell script can do it:
 
 ``` 
@@ -26,3 +26,6 @@ foreach($Sub in $Subs)
     $subName | Select-Object @{Name=’SubscriptionName’;Expression={$subName}},@{Name=’Total VMs’;Expression={$VMs.count}},@{Name=’Total VMs Running’;Expression={$RunningVMs.count}},@{Name=’Total VMs Not Running’;Expression={$NonRunningVMs.count}},@{Name='Num of VMs not connected to OMS’;Expression={$i}} | Export-Csv $reportLoc -Append -NoTypeInformation
 }
 ```
+
+Now to connect all VMs that are not yet connected to Operations Management Suite, refer this:
+[Connecting all Classic VMs with OMS (that are not already connected) across multiple subscriptions](https://github.com/ansingha/Operations-Management-Suite/blob/master/connect-Classic-VMs-to-OMS.md)
