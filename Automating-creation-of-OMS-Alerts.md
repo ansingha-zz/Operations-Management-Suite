@@ -156,5 +156,7 @@ armclient put /subscriptions/$subscriptionId/resourceGroups/$ResourceGroup/provi
 ```
 For more information, please refer:
 https://docs.microsoft.com/en-us/azure/log-analytics/log-analytics-api-alerts
+
 https://docs.microsoft.com/en-us/azure/log-analytics/log-analytics-alerts
+
 https://docs.microsoft.com/en-us/azure/log-analytics/log-analytics-log-search-api 
