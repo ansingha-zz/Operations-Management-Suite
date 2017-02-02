@@ -37,3 +37,11 @@ $results = Get-AzureRmOperationalInsightsSavedSearchResults -ResourceGroupName $
 $results.Value | ConvertFrom-Json | Select-Object *,@{Name='Subscription';Expression={$subName}} | Export-Csv $ReportPath -NoTypeInformation -Append
 }
 ``` 
+
+Or if we dont have a saved search, we can directly get the results in Excel from a dynamic query as follows: 
+```
+$dynamicQuery = "" #write the dynamic query
+$result = Get-AzureRmOperationalInsightsSearchResults -ResourceGroupName $ResourceGroupName -WorkspaceName $WorkSpaceName -Query $dynamicQuery
+
+$result.Value | ConvertFrom-Json | Select-Object *,@{Name='Subscription';Expression={$subName}} | Export-Csv $ReportPath -NoTypeInformation
+```
