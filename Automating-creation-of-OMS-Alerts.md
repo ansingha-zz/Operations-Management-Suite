@@ -41,17 +41,14 @@ New-AzureRmOperationalInsightsWindowsPerformanceCounterDataSource -ResourceGroup
 $search="PasswordResetFromVM"
 $searchInfo="Password was reset within the VM"
 $QueryJson = $search + "Json"
-
 　
 $QueryJson = @"
 {'properties': { 'Category': 'Alert', 'DisplayName':'$searchInfo', 'Query':'Type=SecurityEvent (EventID=4724 OR EventID=4723) EventSourceName=Microsoft-Windows-Security-Auditing AccountType!=Machine', 'Version':'1'}
 "@ 
 armclient put /subscriptions/$subscriptionId/resourceGroups/$ResourceGroup/providers/Microsoft.OperationalInsights/workspaces/$workspace/savedSearches/$Search-Id?api-version=2015-03-20 $QueryJson
-
 　
 $scheduleJson = "{'properties': { 'Interval': 5, 'QueryTimeSpan':5, 'Active':'true' }"
 armclient put /subscriptions/$subscriptionId/resourceGroups/$ResourceGroup/providers/Microsoft.OperationalInsights/workspaces/$workspace/savedSearches/$Search-Id/schedules/$Search-schedule?api-version=2015-03-20 $scheduleJson
-
 　
 $emailJson = "{'properties': { 'Name': '$searchInfo', 'Version':'1', 'Severity':'Warning', 'Type':'Alert', 'Threshold': { 'Operator': 'gt', 'Value': 0 }, 'EmailNotification': {'Recipients': ['recepient@email.com'], 'Subject':'$searchInfo', 'Attachment':'None'} }"
 armclient put /subscriptions/$subscriptionId/resourceGroups/$ResourceGroup/providers/Microsoft.OperationalInsights/workspaces/$workspace/savedSearches/$Search-Id/schedules/$Search-schedule/actions/$Search-action?api-version=2015-03-20 $emailJson
@@ -63,16 +60,13 @@ $search="PasswordResetFromPortal"
 $searchInfo="Password was reset from Azure Portal"
 $QueryJson = $search + "Json"
 
-　
 $QueryJson = @"
 {'properties': { 'Category': 'Alert', 'DisplayName':'$searchInfo', 'Query':'Type=AzureActivity VMAccessWindowsPasswordReset* ActivityStatus=Started', 'Version':'1'}
 "@ 
 armclient put /subscriptions/$subscriptionId/resourceGroups/$ResourceGroup/providers/Microsoft.OperationalInsights/workspaces/$workspace/savedSearches/$Search-Id?api-version=2015-03-20 $QueryJson
 
-　
 $scheduleJson = "{'properties': { 'Interval': 5, 'QueryTimeSpan':5, 'Active':'true' }"
 armclient put /subscriptions/$subscriptionId/resourceGroups/$ResourceGroup/providers/Microsoft.OperationalInsights/workspaces/$workspace/savedSearches/$Search-Id/schedules/$Search-schedule?api-version=2015-03-20 $scheduleJson
-
 　
 $emailJson = "{'properties': { 'Name': '$searchInfo', 'Version':'1', 'Severity':'Warning', 'Type':'Alert', 'Threshold': { 'Operator': 'gt', 'Value': 0 }, 'EmailNotification': {'Recipients': ['recepient@email.com'], 'Subject':'$searchInfo', 'Attachment':'None'} }"
 armclient put /subscriptions/$subscriptionId/resourceGroups/$ResourceGroup/providers/Microsoft.OperationalInsights/workspaces/$workspace/savedSearches/$Search-Id/schedules/$Search-schedule/actions/$Search-action?api-version=2015-03-20 $emailJson
@@ -83,18 +77,15 @@ armclient put /subscriptions/$subscriptionId/resourceGroups/$ResourceGroup/provi
 $search="FreeDiskSpace"
 $searchInfo="Free Disk Space is less than 20%"
 $QueryJson = $search + "Json"
-
 　
 $QueryJson = @"
 {'properties': { 'Category': 'Alert', 'DisplayName':'$searchInfo', 'Query':'Type=Perf ObjectName=LogicalDisk CounterName=\"% Free Space\" InstanceName="_Total" CounterValue<20', 'Version':'1'}
 "@ 
 armclient put /subscriptions/$subscriptionId/resourceGroups/$ResourceGroup/providers/Microsoft.OperationalInsights/workspaces/$workspace/savedSearches/$Search-Id?api-version=2015-03-20 $QueryJson
 
-　
 $scheduleJson = "{'properties': { 'Interval': 5, 'QueryTimeSpan':5, 'Active':'true' }"
 armclient put /subscriptions/$subscriptionId/resourceGroups/$ResourceGroup/providers/Microsoft.OperationalInsights/workspaces/$workspace/savedSearches/$Search-Id/schedules/$Search-schedule?api-version=2015-03-20 $scheduleJson
 
-　
 $emailJson = "{'properties': { 'Name': '$searchInfo', 'Version':'1', 'Severity':'Warning', 'Type':'Alert', 'Threshold': { 'Operator': 'gt', 'Value': 0 }, 'EmailNotification': {'Recipients': ['recepient@email.com'], 'Subject':'$searchInfo', 'Attachment':'None'} }"
 armclient put /subscriptions/$subscriptionId/resourceGroups/$ResourceGroup/providers/Microsoft.OperationalInsights/workspaces/$workspace/savedSearches/$Search-Id/schedules/$Search-schedule/actions/$Search-action?api-version=2015-03-20 $emailJson
 
@@ -104,17 +95,14 @@ armclient put /subscriptions/$subscriptionId/resourceGroups/$ResourceGroup/provi
 $search="HighCPUUtilization"
 $searchInfo="CPU utilization is high"
 $QueryJson = $search + "Json"
-
 　
 $QueryJson = @"
 {'properties': { 'Category': 'Alert', 'DisplayName':'$searchInfo', 'Query':'Type=Perf (ObjectName=Processor) CounterName=\"% Processor Time\" InstanceName="_Total" | Measure avg(CounterValue) by Computer Interval 30Minutes | where AggregatedValue>80', 'Version':'1'}
 "@ 
 armclient put /subscriptions/$subscriptionId/resourceGroups/$ResourceGroup/providers/Microsoft.OperationalInsights/workspaces/$workspace/savedSearches/$Search-Id?api-version=2015-03-20 $QueryJson
-
 　
 $scheduleJson = "{'properties': { 'Interval': 60, 'QueryTimeSpan':60, 'Active':'true' }"
 armclient put /subscriptions/$subscriptionId/resourceGroups/$ResourceGroup/providers/Microsoft.OperationalInsights/workspaces/$workspace/savedSearches/$Search-Id/schedules/$Search-schedule?api-version=2015-03-20 $scheduleJson
-
 　
 $emailJson = "{'properties': { 'Name': '$searchInfo', 'Version':'1', 'Severity':'Warning', 'Type':'Alert', 'Threshold': { 'Operator': 'gt', 'Value': 0 }, 'EmailNotification': {'Recipients': ['recepient@email.com'], 'Subject':'$searchInfo', 'Attachment':'None'} }"
 armclient put /subscriptions/$subscriptionId/resourceGroups/$ResourceGroup/providers/Microsoft.OperationalInsights/workspaces/$workspace/savedSearches/$Search-Id/schedules/$Search-schedule/actions/$Search-action?api-version=2015-03-20 $emailJson
@@ -125,21 +113,17 @@ armclient put /subscriptions/$subscriptionId/resourceGroups/$ResourceGroup/provi
 $search="MemoryInUse"
 $searchInfo="Committed Bytes in use is high"
 $QueryJson = $search + "Json"
-
 　
 $QueryJson = @"
 {'properties': { 'Category': 'Alert', 'DisplayName':'$searchInfo', 'Query':'Type=Perf (ObjectName=Memory) CounterName=\"% Committed Bytes in Use\" InstanceName="*" | Measure avg(CounterValue) by Computer Interval 30Minutes | where AggregatedValue>80', 'Version':'1'}
 "@ 
 armclient put /subscriptions/$subscriptionId/resourceGroups/$ResourceGroup/providers/Microsoft.OperationalInsights/workspaces/$workspace/savedSearches/$Search-Id?api-version=2015-03-20 $QueryJson
-
 　
 $scheduleJson = "{'properties': { 'Interval': 60, 'QueryTimeSpan':60, 'Active':'true' }"
 armclient put /subscriptions/$subscriptionId/resourceGroups/$ResourceGroup/providers/Microsoft.OperationalInsights/workspaces/$workspace/savedSearches/$Search-Id/schedules/$Search-schedule?api-version=2015-03-20 $scheduleJson
-
 　
 $emailJson = "{'properties': { 'Name': '$searchInfo', 'Version':'1', 'Severity':'Warning', 'Type':'Alert', 'Threshold': { 'Operator': 'gt', 'Value': 0 }, 'EmailNotification': {'Recipients': ['recepient@email.com'], 'Subject':'$searchInfo', 'Attachment':'None'} }"
 armclient put /subscriptions/$subscriptionId/resourceGroups/$ResourceGroup/providers/Microsoft.OperationalInsights/workspaces/$workspace/savedSearches/$Search-Id/schedules/$Search-schedule/actions/$Search-action?api-version=2015-03-20 $emailJson
-
 }
 ```
 
@@ -150,7 +134,6 @@ $searchValues=@("PasswordResetFromVM", "PasswordResetFromPortal")
 $searchInfoStrings= @("Password was reset within the VM", "Password was reset from Azure Portal")
 $queryInfo =  @("Type=SecurityEvent (EventID=4724 OR EventID=4723) EventSourceName=Microsoft-Windows-Security-Auditing AccountType!=Machine", "Type=AzureActivity VMAccessWindowsPasswordReset* ActivityStatus=Started")
 
-　
 for( $i = 0; $i -lt $searchValues.length; $i++) 
 {
 $search = $searchValues[$i]
@@ -173,7 +156,5 @@ armclient put /subscriptions/$subscriptionId/resourceGroups/$ResourceGroup/provi
 ```
 For more information, please refer:
 https://docs.microsoft.com/en-us/azure/log-analytics/log-analytics-api-alerts
-
 https://docs.microsoft.com/en-us/azure/log-analytics/log-analytics-alerts
-
 https://docs.microsoft.com/en-us/azure/log-analytics/log-analytics-log-search-api 
