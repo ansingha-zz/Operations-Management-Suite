@@ -1,4 +1,5 @@
 ###Connecting all Classic VMs with OMS (that are not already connected) across multiple subscriptions
+
 If you are managing multiple Azure subscriptions and thus managing a lot of Azure VMs and want to connect all VMs to OMS (the VMs that are not already connected), this script will do that. Can be used for ARM VMs too with minor changes:
 
 ```
