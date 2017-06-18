@@ -1,4 +1,4 @@
-### Create a new OMS workspace, install required solutions and install Microsoft Monitoring Agent virtual machine extension to all VMs in the Azure Subscription:
+### Create a new OMS workspace, install required solutions and install Microsoft Monitoring Agent extension to all VMs in the Azure Subscription:
 
 ```
 #please provide the subscription name
